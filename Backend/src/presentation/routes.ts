@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import  userRoutes  from './user/userRouter';
+import  ProductRoutes from './products/productsRoutes';
 
 
 
@@ -11,7 +13,9 @@ export class AppRoutes {
     const router = Router();
     
     
-    // router.use('/api/todos', /*TodoRoutes.routes */ );
+    router.use('/api/users', userRoutes);
+    router.use('/api/products', ProductRoutes);
+    
 
 
 
