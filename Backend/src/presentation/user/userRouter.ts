@@ -8,6 +8,7 @@ router.get("/:id",  UserController.getUserById);
 router.post("/create",  UserController.createUser);
 router.put("/:id",  UserController.updateUser);
 router.delete("/:id", UserController.deleteUser);
+router.put("/change-role/:id", UserController.changeRole);
 
 
 

@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 import path from 'path';
 import sequelize from '../config/database'; // Importa el servicio Sequelize y la función start
-import { start as startSequelize } from '../conf/index'; // Asumiendo que la función se llama start en tu archivo
+import { start as startSequelize } from '../extends/connectionBd'; // Asumiendo que la función se llama start en tu archivo
 
 interface Options {
   port: number;

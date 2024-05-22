@@ -1,17 +1,31 @@
 import  User from '../../models/user';
 import { Request, Response } from 'express';
+import sequelize from '../../config/database';
 
 export class UserController {
-   
-   static async createUser(req: Request, res: Response) {
+    static async createUser(req: Request, res: Response) {
         try {
-            const user = new User(req.body);
-            await user.save();
-            res.status(201).send(user);
+          console.log("Conectando a la base de datos...");
+          await sequelize.authenticate();
+          console.log("Conexión establecida correctamente.");
+    
+          console.log("Creando nuevo usuario...");
+          const user = await User.create(req.body);
+          console.log("Usuario creado:", user);
+    
+          console.log("Guardando usuario en la base de datos...");
+          await user.save();
+    
+          console.log("Usuario guardado correctamente en la base de datos.");
+          res.status(201).send(user);
         } catch (error) {
-            res.status(400).send(error);
+          console.error("Error al crear el usuario:", error);
+          res.status(400).send(error);
         }
-    }
+      }
+    
+   
+ 
     static async getAllUsers(req: Request, res: Response) {
         try {
             // Utiliza el método findAll de Sequelize para obtener todos los usuarios
@@ -79,6 +93,22 @@ export class UserController {
             console.error('Error al eliminar usuario:', error);
             res.status(500).json({ error: 'Hubo un problema al eliminar el usuario' });
         }
-    }        
+    } 
+    
+    static changeRole = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const { role } = req.body;
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ error: 'Usuario no encontrado' });
+            }
+            await user.update(req.body );
+            res.json({ message: 'Rol actualizado', user });
+        } catch (error) {
+            console.error('Error al actualizar el rol del usuario:', error);
+            res.status(500).json({ error: 'Hubo un problema al actualizar el rol del usuario' });
+        }
+    }
 
   }

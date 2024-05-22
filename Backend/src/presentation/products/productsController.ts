@@ -1,15 +1,22 @@
 import Product from '../../models/product';
 import { Request, Response } from 'express';
+import sequelize from '../../config/database';
 
 export class ProductController {
    
    static Productcreate = async (req: Request, res: Response) => {
 
      try {
+        console.log("Conectando a la base de datos...");
+        await sequelize.authenticate();
+        console.log("Conexión establecida correctamente.");
         const { name, price,description } = req.body;
-        const newProduct = new Product({ name, price, description });
-        await newProduct.save();
-        res.json({ message: 'Product created' });
+        const product = new Product({ name, price, description });
+        console.log("Guardando usuario en la base de datos...");
+
+        await product.save();
+        console.log("Usuario guardado correctamente en la base de datos.");
+        res.json({ message: 'Product created' ,product});
      } catch (err) {
         res.status(500).json({ err });
      }
