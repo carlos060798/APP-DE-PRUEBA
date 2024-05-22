@@ -1,8 +1,7 @@
 import express, { Router } from 'express';
-import path from 'path';
-import sequelize from '../config/database'; // Importa el servicio Sequelize y la función start
+import cors from 'cors';
 import { start as startSequelize } from '../extends/connectionBd'; // Asumiendo que la función se llama start en tu archivo
-
+import corsOptions from '../extends/corsOptions';
 interface Options {
   port: number;
   routes: Router;
@@ -27,6 +26,8 @@ export class Server {
     //* Middlewares
     this.app.use(express.json()); // raw
     this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded
+    this.app.use(cors(corsOptions));
+
 
     //* Public Folder
     this.app.use(express.static(this.publicPath));
@@ -37,11 +38,7 @@ export class Server {
     //* Start Sequelize
     await startSequelize(); // Llama a la función start de Sequelize
 
-    //* SPA /^\/(?!api).*/  <== Únicamente si no empieza con la palabra api
-    this.app.get('*', (req, res) => {
-      const indexPath = path.join(__dirname + `../../../${this.publicPath}/index.html`);
-      res.sendFile(indexPath);
-    });
+   
 
     this.serverListener = this.app.listen(this.port, () => {
       console.log(`Server running on port ${this.port}`);

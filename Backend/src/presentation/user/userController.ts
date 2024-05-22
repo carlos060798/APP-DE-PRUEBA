@@ -42,8 +42,10 @@ export class UserController {
 
     static async getUserById(req: Request, res: Response) {
         try {
+  
+  const{userid}=req.params;
             // Utiliza el método findByPk de Sequelize para obtener el usuario por su ID
-            const user = await User.findByPk(req.params.id);
+            const user = await User.findByPk(userid);
             if (!user) {
                 // Si no se encuentra el usuario, retorna un 404
                 return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -60,7 +62,9 @@ export class UserController {
     static async updateUser(req: Request, res: Response) {
         try {
             // Utiliza el método findByPk de Sequelize para obtener el usuario por su ID
-            const user = await User.findByPk(req.params.id);
+            const{userid}=req.params;
+
+            const user = await User.findByPk(userid);
             if (!user) {
                 // Si no se encuentra el usuario, retorna un 404
                 return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -78,8 +82,9 @@ export class UserController {
 
     static async deleteUser(req: Request, res: Response) {
         try {
-            // Utiliza el método findByPk de Sequelize para obtener el usuario por su ID
-            const user = await User.findByPk(req.params.id);
+        
+            const{userid}=req.params;
+            const user = await User.findByPk(userid);
             if (!user) {
                 // Si no se encuentra el usuario, retorna un 404
                 return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -97,9 +102,9 @@ export class UserController {
     
     static changeRole = async (req: Request, res: Response) => {
         try {
-            const { id } = req.params;
+            const{userid}=req.params;
             const { role } = req.body;
-            const user = await User.findByPk(id);
+            const user = await User.findByPk(userid);
             if (!user) {
                 return res.status(404).json({ error: 'Usuario no encontrado' });
             }
