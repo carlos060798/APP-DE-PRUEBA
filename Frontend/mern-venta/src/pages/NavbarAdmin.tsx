@@ -12,6 +12,7 @@ function NavbarAdmin() {
             <Nav.Link as={Link} to="/">Users</Nav.Link>
             <Nav.Link as={Link} to="/create">Create User</Nav.Link>
             <Nav.Link as={Link} to={`/products`}>Productos</Nav.Link>
+            <Nav.Link as={Link} to={`/roles/create`}>Crear Rol</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
