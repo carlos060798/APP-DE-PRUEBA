@@ -1,7 +1,19 @@
-import { Table, Container } from 'react-bootstrap';
+import { Table, Container,Button} from 'react-bootstrap';
 import { Product } from '../../../types/product';
+import { deleteProduct } from '../../../api/productApi';
+import { useState } from 'react';
 
-function ProductList({ products} : { products: Product[]} ) {
+function ProductList({ products, updateProducts }: { products: Product[], updateProducts: () => void }) {
+  const [productList, setProductList] = useState(products);
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteProduct(id);
+      setProductList(productList.filter(product => product.id !== id));
+      updateProducts();
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+    }
+  };
   return (
     <Container>
       <h1 className="my-4 text-center text-primary  fw-bold">Lista de Productos</h1>
@@ -19,7 +31,16 @@ function ProductList({ products} : { products: Product[]} ) {
               <td>{product.name}</td>
               <td>{product.description}</td>
               <td>{product.price}</td>
+               <td>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDelete(product.id)}
+                >
+                  Eliminar
+                </Button>
+              </td>
             </tr>
+           
           ))}
         </tbody>
       </Table>

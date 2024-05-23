@@ -7,7 +7,7 @@ import { SalesController } from './salesController';
 const router = Router();
 
 router.get("/",  SalesController.SalesList);
-router.post("/:products_id/:users_id",  SalesController.Salescreate);
+router.post("/",  SalesController.Salescreate);
 router.get("/:id",  SalesController.SalesListById);
 router.put("/:id",  SalesController.SalesUpdate);
 router.delete("/:id",  SalesController.SalesDelete);

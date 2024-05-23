@@ -2,6 +2,7 @@ import Product from '../../models/product';
 import { Request, Response } from 'express';
 import sequelize from '../../config/database';
 
+
 /**
  * Controller class for handling product-related operations.
  */
@@ -39,6 +40,21 @@ export class ProductController {
         try {
             const products = await Product.findAll();
             res.json(products);
+        } catch (err) {
+            res.status(500).json({ err });
+        }
+    }
+
+
+    static ProductDelete = async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const product = await Product.findByPk(id);
+            if (!product) {
+                return res.status(404).json({ error: 'Product not found' });
+            }
+            await product.destroy();
+            res.json({ message: 'Product deleted' });
         } catch (err) {
             res.status(500).json({ err });
         }

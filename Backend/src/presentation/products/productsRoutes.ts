@@ -8,6 +8,7 @@ const router = Router();
 
 router.get("/",  ProductController.ProductList);
 router.post("/create",  ProductController.Productcreate);
+router.delete("/:id",  ProductController.ProductDelete);
 
 
 export default router;

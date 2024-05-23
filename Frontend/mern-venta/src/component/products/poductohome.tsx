@@ -30,7 +30,8 @@ function ProductHome() {
             <ProductCreate updateProducts={updateProducts} />
           </Col>
           <Col>
-            <ProductList products={products} />
+          <ProductList products={products} updateProducts={updateProducts} />
+
           </Col>
         </Row>
       </Container>
