@@ -3,6 +3,9 @@ import { UserController } from "./userController";
 import { Router } from "express";
 import { handleInputError } from "../../middleware/validate";
 
+/**
+ * Express router instance for handling user routes.
+ */
 const router = Router();
 
 router.get("/", UserController.getAllUsers);

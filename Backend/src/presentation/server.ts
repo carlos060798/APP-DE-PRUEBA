@@ -1,20 +1,48 @@
 import express, { Router } from 'express';
 import cors from 'cors';
-import { start as startSequelize } from '../extends/connectionBd'; // Asumiendo que la función se llama start en tu archivo
+import { start as startSequelize } from '../extends/connectionBd'; 
 import corsOptions from '../extends/corsOptions';
+import { swaggerUi, swaggerSpec } from '../extends/swaggerConfig';
+
 interface Options {
   port: number;
   routes: Router;
   public_path?: string;
 }
 
+/**
+ * Represents a server that listens for incoming requests and handles them accordingly.
+ */
 export class Server {
+  /**
+   * The Express application instance.
+   */
   public readonly app = express();
+
+  /**
+   * The server listener instance.
+   */
   private serverListener?: any;
+
+  /**
+   * The port number on which the server listens.
+   */
   private readonly port: number;
+
+  /**
+   * The public folder path for serving static files.
+   */
   private readonly publicPath: string;
+
+  /**
+   * The router instance containing the routes for the server.
+   */
   private readonly routes: Router;
 
+  /**
+   * Creates a new instance of the Server class.
+   * @param options - The options for configuring the server.
+   */
   constructor(options: Options) {
     const { port, routes, public_path = 'public' } = options;
     this.port = port;
@@ -22,12 +50,15 @@ export class Server {
     this.routes = routes;
   }
 
+  /**
+   * Starts the server and listens for incoming requests.
+   */
   async start() {
     //* Middlewares
     this.app.use(express.json()); // raw
     this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded
     this.app.use(cors(corsOptions));
-
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     //* Public Folder
     this.app.use(express.static(this.publicPath));
@@ -38,13 +69,14 @@ export class Server {
     //* Start Sequelize
     await startSequelize(); // Llama a la función start de Sequelize
 
-   
-
     this.serverListener = this.app.listen(this.port, () => {
       console.log(`Server running on port ${this.port}`);
     });
   }
 
+  /**
+   * Closes the server and stops listening for incoming requests.
+   */
   public close() {
     this.serverListener?.close();
   }

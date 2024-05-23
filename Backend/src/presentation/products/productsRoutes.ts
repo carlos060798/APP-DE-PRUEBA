@@ -1,6 +1,9 @@
 import  {ProductController}  from "./productsController";
 import { Router } from "express";
 
+/**
+ * Express router for handling products routes.
+ */
 const router = Router();
 
 router.get("/",  ProductController.ProductList);
