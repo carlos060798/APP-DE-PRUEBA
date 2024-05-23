@@ -1,4 +1,5 @@
-## PRUEBA TECNICA
+## PRUEBA TECNICA  
+DEMO DE VIDEO: https://youtu.be/3IkkfcpBm4I?si=UUP70R8DTt6pDx3U
 Situación propuesta:
 Daniela, tiene una tienda de barrio que con los años ha crecido, actualmente
 cuenta con 5 empleados, y está presentando problemas al hacer las cuentas
