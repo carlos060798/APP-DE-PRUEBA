@@ -1,4 +1,3 @@
-// config/database.ts
 import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize({
@@ -7,3 +6,5 @@ const sequelize = new Sequelize({
 });
 
 export default sequelize ;
+
+

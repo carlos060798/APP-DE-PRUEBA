@@ -3,6 +3,8 @@ import cors from 'cors';
 import { start as startSequelize } from '../extends/connectionBd'; 
 import corsOptions from '../extends/corsOptions';
 import { swaggerUi, swaggerSpec } from '../extends/swaggerConfig';
+import { insertProducts } from '../dataProduct/product-data';
+
 
 interface Options {
   port: number;
@@ -68,6 +70,7 @@ export class Server {
 
     //* Start Sequelize
     await startSequelize(); // Llama a la función start de Sequelize
+  //  await insertProducts(); // Inserta los productos al inicio del servidor
 
     this.serverListener = this.app.listen(this.port, () => {
       console.log(`Server running on port ${this.port}`);
